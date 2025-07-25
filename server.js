@@ -1,35 +1,33 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
-const cors = require("cors");
-const authRoutes = require("./routes/auth");
-require("dotenv").config();
+const authRoutes = require('./routes/auth');
+const cors = require('cors'); // Add this line
 
+require('dotenv').config();
 const app = express();
 
-// Middleware
+// Add CORS middleware
+app.use(cors()); // This enables all CORS requests
+// OR for more control:
 app.use(cors({
-  origin: 'https://careercraft-frontend-zeta.vercel.app', // change to your frontend's URL in production
+  origin: 'https://careercraft-frontend-zeta.vercel.app/', // Your React app's origin
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 app.use(express.json());
-
-// Routes
 app.use('/api/auth', authRoutes);
-
-// Optional: serve static files (e.g., from a `public/` directory)
 app.use(express.static(path.join(__dirname, "public")));
 
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB connected successfully"))
+.catch(err => console.error("MongoDB connection error:", err));
+
+
+
 app.get("/", (req, res) => {
-  res.send("Backend is running");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB connected successfully"))
-.catch((err) => console.error("❌ MongoDB connection error:", err));
-
-module.exports = app;

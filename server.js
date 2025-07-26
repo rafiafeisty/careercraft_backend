@@ -35,4 +35,5 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // ✅ Required for Vercel
+module.exports=app
 module.exports.handler = serverless(app);

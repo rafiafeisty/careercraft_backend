@@ -8,7 +8,7 @@ const serverless = require("serverless-http");
 require("dotenv").config();
 
 // Models
-const { Users, Company, Applied } = require("./models/Users");
+const { Users, Company, Applied } = require("../models/Users");
 
 // Create app
 const app = express();
@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
 app.get('/test', (req, res) => res.json({ message: 'Backend is working' }));
 
 // Register
-app.post('/api/auth/register', async (req, res) => {
+app.post('/auth/register', async (req, res) => {
   try {
     const { username, password } = req.body;
     const userExist = await Users.findOne({ username });
@@ -61,7 +61,7 @@ app.post('/api/auth/register', async (req, res) => {
 });
 
 // Login
-app.post('/api/auth/login', async (req, res) => {
+app.post('/auth/login', async (req, res) => {
   try {
     const { username, password } = req.body;
     const userFound = await Users.findOne({ username });
@@ -84,7 +84,7 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // Get all companies
-app.get('/api/auth/portal', async (req, res) => {
+app.get('/auth/portal', async (req, res) => {
   try {
     const all_data = await Company.find();
     res.json(all_data);
@@ -94,7 +94,7 @@ app.get('/api/auth/portal', async (req, res) => {
 });
 
 // Apply to company
-app.post('/api/auth/apply', async (req, res) => {
+app.post('/auth/apply', async (req, res) => {
   try {
     const { user_name, company_name, category, user_id } = req.body;
     const new_apply = new Applied({ user_name, company_name, category, user_id });
@@ -106,7 +106,7 @@ app.post('/api/auth/apply', async (req, res) => {
 });
 
 // Get applied companies by user_id
-app.get('/api/auth/apply', async (req, res) => {
+app.get('/auth/apply', async (req, res) => {
   try {
     const { user_id } = req.query;
     const all_data = await Applied.find({ user_id });
@@ -122,7 +122,7 @@ app.get('/api/auth/apply', async (req, res) => {
 });
 
 // Test route
-app.post("/api/auth/testing", (req, res) => {
+app.post("/auth/testing", (req, res) => {
   res.json("API is working");
 });
 

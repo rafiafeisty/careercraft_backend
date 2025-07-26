@@ -4,13 +4,13 @@ const path = require("path");
 const authRoutes = require("./routes/auth");
 const cors = require("cors");
 require("dotenv").config();
+const serverless = require("serverless-http");
 
 // Create app
 const app = express();
 
-// CORS setup for Vercel frontend
 app.use(cors({
-  origin: 'https://careercraft-frontend-zeta.vercel.app', // ✅ Remove trailing slash
+  origin: 'https://careercraft-frontend-zeta.vercel.app', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
@@ -35,4 +35,4 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch(err => console.error("❌ MongoDB connection error:", err));
 
 // ✅ Required for Vercel
-module.exports = app;
+module.exports.handler = serverless(app);

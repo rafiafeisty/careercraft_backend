@@ -122,7 +122,7 @@ app.get('/auth/apply', async (req, res) => {
 });
 
 // Test route
-app.post("/auth/testing", (req, res) => {
+app.get("/auth/testing", (req, res) => {
   res.json("API is working");
 });
 

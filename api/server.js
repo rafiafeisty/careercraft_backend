@@ -126,6 +126,4 @@ app.post("/auth/testing", (req, res) => {
   res.json("API is working");
 });
 
-// Export for Vercel
-module.exports = app;
 module.exports.handler = serverless(app);

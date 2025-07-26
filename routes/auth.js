@@ -92,5 +92,7 @@ router.get('/apply', async (req, res) => {
   }
 });
 
-
+app.post("/test",(req,res)=>{
+    res.json("api is working")
+})
 module.exports = router;

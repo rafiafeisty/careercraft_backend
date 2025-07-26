@@ -122,8 +122,10 @@ app.get('/auth/apply', async (req, res) => {
 });
 
 // Test route
-app.get("/auth/testing", (req, res) => {
+app.post("/auth/testing", (req, res) => {
   res.json("API is working");
 });
 
+// Export for Vercel
+module.exports = app;
 module.exports.handler = serverless(app);
